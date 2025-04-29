@@ -54,14 +54,16 @@ string expressao_para_polonesa_complexa(string expressao, bool rev){
         if(caracter == " ") continue; //Não é necessário analisar caso em que é branco
         else if(caracter == "(") oper.push(caracter);
 
+
+        //Faz as operações com base na prioridade das operações, se o operador no topo da pilha tem mais prioridade que o atual, faz todas as operações
+        //Previstas e depois coloca o novo operador na pilha
         else if(!num.empty() && !oper.empty() && (operador(caracter[0]) > 0) && (operador(caracter[0]) < operador(oper.top()[0]))){
             while(!oper.empty() && oper.top() != "(") att_expressao(num, oper, rev);
             if(!oper.empty() && oper.top() == "(") oper.pop();
             oper.push(caracter);
         }
             
-            
-
+        
         else if(operador(caracter[0]) > 0) oper.push(caracter); //Coloca os operadores na lista de operador e pula para o pŕoximo loop
 
         else if(caracter == ")" && !num.empty() && !oper.empty()){ //Realiza a operação
@@ -73,6 +75,7 @@ string expressao_para_polonesa_complexa(string expressao, bool rev){
         }
 
         else if(caracter != ")") num.push(caracter); //O que sobrar ou é letra ou número, então fica sendo considerado número e vai para pilha de numero
+                                                     //No final, existe a chance de a expressao ter só um ), então impede de adicionar esse )
 
         if(!num.empty()) cout << num.top() << endl;
     }
@@ -108,7 +111,7 @@ string expressao_para_polonesa(string expressao, bool rev){
         }
 
         else if(caracter != ")") num.push(caracter); //O que sobrar ou é letra ou número, então fica sendo considerado número e vai para pilha de numero
-
+                                                    //No final, existe a chance de a expressao ter só um ), então impede de adicionar esse )
     }
 
 
