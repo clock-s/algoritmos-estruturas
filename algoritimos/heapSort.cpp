@@ -1,84 +1,89 @@
 #include <iostream>
-#include <ctime>
-#include <cstdio>
+#include <vector>
+
+
+#define MAX 1
+#define MIN 0
 
 using namespace std;
 
-void printVet(int *array, const int &size){
-  for(int i = 0 ; i < size ; i++){
+
+
+
+void heapfy(vector<int> &heap, int index, int size, bool max = 1, int first_index = 1){
+  int left = index*2 - (first_index - 1);
+  int right = index*2 + 1 - (first_index - 1);
+  int key = index;
+
+
+  if(max == 1){
+    if(left < size && heap[left] > heap[key]){
+      key = left;
+    }
+
+    if(right < size && heap[right] > heap[key]){
+      key = right;
+    }
+  }else {
+    if(left < size && heap[left] < heap[key]){
+      key = left;
+    }
+
+    if(right < size && heap[right] < heap[key]){
+      key = right;
+    }
+  }
+
+
+  if(key != index){
+    swap(heap[index], heap[key]);
+
+    heapfy(heap, key, size, max, first_index);
+  }
+
+
+  return;
+}
+
+
+void get_heap(vector<int> &heap, int size, bool max = 1, int first_index = 1){
+
+  for(int i = size/2 ; i >= first_index ; i--){
+    heapfy(heap, i, size, max, first_index);
+  }
+
+}
+
+
+
+void heap_sort(vector<int> &heap, bool max = 1, int first_index = 1){
+  int size = heap.size();
+  get_heap(heap, size, max, first_index);
+  int count = 1;
+
+  for(int i = first_index ; i < size ; i++){
+    swap(heap[first_index], heap[size - count]);
+    heapfy(heap, first_index, size - count, max, first_index);
+    count++;
+  }
+
+}
+
+
+
+int main(int argc, char const *argv[]){
+  
+  vector<int> array = {0, 20, 5, 10, 15, 35, 10, 28, 9, 7, 8, 10, 11};
+
+  heap_sort(array, MAX, 2);
+
+  for(int i = 1 ; i < array.size() ; i++){
     cout << array[i] << " ";
   }
 
   cout << endl;
-}
 
 
-
-
-void ordenar(int *lista, const int &i, const int &size){
-  int left = i*2 + 1;
-  int righ = i*2 + 2;
-  
-  int high = i;
-
-  
-  //cout << "left: ";
-  if(left < size && lista[left] > lista[high]){
-    high = left;
-  }
-  //cout << "\nRigh: ";
-  if(righ < size && lista[righ] > lista[high]){
-    high = righ;
-  }
-
-  if(high != i){
-    //cout << "Erro!";
-    swap(lista[i],lista[high]);
-
-    ordenar(lista, high, size);
-  }
-  
-}
-
-
-void escolhendo(int *lista, const int &size){
-  for(int i = size/2-1 ; i >= 0 ; i--){
-    ordenar(lista,i,size);
-  }
-
-
-  for(int i = size -1 ; i > 0 ; i--){
-    swap(lista[0],lista[i]);
-
-    ordenar(lista,0,i);
-
-
-  }
-}
-
-int *array;
-
-int makeArray(){
-  int size = 1000000;
-  array = new int[size];
-
-  for(int i = 0 ; i < size ; i++){
-    array[i] = rand()%size;
-  }
-
-  return size;
-}
-
-int main(){
-  srand(time(nullptr));
-  
-  int tamanho = makeArray();
-  
-  //printVet(array, tamanho);
-
-  escolhendo(array, tamanho);
-  
-  printVet(array,tamanho);
-  
   return 0;
 }
+

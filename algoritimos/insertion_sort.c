@@ -8,19 +8,13 @@ void print_array(int* array, int size){
     printf("\n");
 }
 
-int main(int argc, char const *argv[]){
+void insertion_sort(int* array, int size, int first_index){
 
-    int array[] = {9, 8, 7, 2, 5, 4, 3, 2, 1};
-    int array_size = sizeof(array)/sizeof(int);
-
-
-    print_array(array, array_size);
-
-    for(int i = 1 ; i < array_size ; i++){
+    for(int i = 1 + first_index ; i < size ; i++){
         int key = array[i];
         int j = i - 1;
 
-        while(j >= 0 && array[j] > key){
+        while(j >= first_index && array[j] > key){
             array[j + 1] = array[j];
             j--; 
         }
@@ -28,6 +22,32 @@ int main(int argc, char const *argv[]){
 
         //print_array(array, array_size);
     }
+}
+
+
+for(int i = 1  ; i < size ; i++){
+    int key = array[i];
+    int j = i - 1;
+
+    while(j >= 0 && array[j] > key){
+        array[j + 1] = array[j];
+        j--; 
+    }
+    array[j + 1] = key;
+
+    //print_array(array, array_size);
+}
+
+int main(int argc, char const *argv[]){
+    {1,2,3,4,5,6,7}
+
+    int array[] = {9, 8, 7, 2, 5, 4, 3, 2, 1};
+    int array_size = sizeof(array)/sizeof(int);
+
+
+    print_array(array, array_size);
+
+    insertion_sort(array, array_size, 1);
 
     print_array(array, array_size);
 
