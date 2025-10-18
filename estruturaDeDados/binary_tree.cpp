@@ -188,7 +188,7 @@ void Binary_Tree::remove(int key){
     if(node->left == nullptr && node->right == nullptr){
         
         transplant(node, nullptr);
-
+        
         
     }else if(node->right != nullptr){
         Node *min = find_min_aux(node->right);
@@ -199,15 +199,20 @@ void Binary_Tree::remove(int key){
         if(min == new_position){            
 
             transplant(node, min);
+
+            att_height_size(min); //NOTE:CHECAR, MAS ACHO QUE DA CERTO
             
         }else if(min != new_position){
             min->dad->left = min->right;
+            Node *min_dad = min->dad;
 
             if(min->right != nullptr){
                 min->right->dad = min->dad;
             }
         
             transplant(node, min);
+
+            att_height_size(min_dad); //NOTE:CHECAR, MAS ACHO QUE DA CERTO
         }
 
         
@@ -216,6 +221,8 @@ void Binary_Tree::remove(int key){
         Node *new_position = node->left;
 
         transplant(node, new_position);
+
+        att_height_size(new_position); //NOTE:CHECAR, MAS ACHO QUE DA CERTO
     }
 
 
