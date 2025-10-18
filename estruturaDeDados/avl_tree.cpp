@@ -32,7 +32,7 @@ void AVL_Tree::rotation(Node *node){
 
 
     if(get_height(node->right) > get_size(node->left) + 1){
-        if(get_height(node->right->left) > get_size(node->right->right) + 1){
+        if(get_height(node->right->right) >= get_size(node->right->left)){
             double_left_rotation(node);
             node = node->dad;
         }else{
@@ -41,7 +41,7 @@ void AVL_Tree::rotation(Node *node){
         
         rotated = true;
     }else if(get_height(node->left) > get_size(node->right) + 1){
-        if(get_height(node->left->right) > get_size(node->right->left) + 1){
+        if(get_height(node->left->left) >= get_size(node->left->right)){
             double_right_rotation(node);
             node = node->dad;
         }else{
