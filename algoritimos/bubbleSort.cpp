@@ -12,14 +12,14 @@ void printVet(int *array, const int &size){
   cout << endl;
 }
 
-int *array;
+int *array_list;
 
 int makeArray(){
   int size = 1000000;
-  array = new int[size];
+  array_list = new int[size];
 
   for(int i = 0 ; i < size ; i++){
-    array[i] = rand()%size;
+    array_list[i] = rand()%size;
   }
 
   return size;
@@ -41,9 +41,9 @@ int main(){
   
   //printVet(array, tamanho);
 
-  ordenar(array, tamanho);
+  ordenar(array_list, tamanho);
   
-  printVet(array,tamanho);
+  printVet(array_list,tamanho);
   
   return 0;
 }

@@ -1,21 +1,24 @@
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
 
 int particion(vector<int> &array, int i, int j){
-    int r;
-    r = j-1;
-    int key = j;
+    int key = rand()%(j-i) + i;
+    swap(array[key], array[j]);
+    key = j;
+    j--;
     
 
-    while(i <= r){
+    while(i <= j){
         if(array[i] <= array[key]){
             i++;
         }else{
-            swap(array[i], array[r]);
-            r--;
+            swap(array[i], array[j]);
+            j--;
         }
 
     }
@@ -44,6 +47,8 @@ void quickSort(vector<int> &array, int i, int j){
 
 int main(int argc, char const *argv[])
 {
+    srand(time(nullptr));
+
     vector<int> array = {0, 20, 5, 10, 15, 35, 10, 28, 9, 7, 8, 10, 11};
 
     for(int i = 0 ; i < array.size() ; i++){
